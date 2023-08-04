@@ -2,6 +2,7 @@
 import axios from "axios";
 import * as z from "zod";
 import { Code } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import { Heading } from "@/components/Heading";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -112,7 +113,24 @@ const CodePage = () => {
                 )}
               >
                 {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
-                <p className="text-sm">{message.content}</p>
+                {/* <p className="text-sm">
+                  {message.content}</p> */}
+                <ReactMarkdown
+                  components={{
+                    pre: ({ node, ...props }) => (
+                      <div className="overflow-auto w-full my-2 bg-black/10 p-2 rounded-lg">
+                        <pre {...props} />
+                      </div>
+                    ),
+
+                    code: ({ node, ...props }) => (
+                      <code className="bg-black/10 rounded-lg p-1" {...props} />
+                    ),
+                  }}
+                  className="text-sm overflow-hidden leading-7"
+                >
+                  {message.content || ""}
+                </ReactMarkdown>
               </div>
             ))}
           </div>
